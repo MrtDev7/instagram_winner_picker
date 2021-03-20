@@ -42,10 +42,10 @@
 
 */
 
-(function($) {
+(function ($) {
     "use strict";
 
-    jQuery(document).on("ready", function() {
+    jQuery(document).on("ready", function () {
         /*-----------------------------
       Fixed Navigation
     -----------------------------*/
@@ -55,7 +55,7 @@
             $("body").removeClass("fixed-header");
         }
         /* Scroll Function */
-        $(window).on("scroll", function() {
+        $(window).on("scroll", function () {
             /* Fixed Navigation */
             if ($("header").offset().top > 50) {
                 $("body").addClass("fixed-header");
@@ -76,9 +76,9 @@
                 let element = document.createElement("span"),
                     part = index >= array.length / 2 ? -1 : 1,
                     position =
-                    index >= array.length / 2 ?
-                    array.length / 2 - index + (array.length / 2 - 1) :
-                    index,
+                        index >= array.length / 2 ?
+                            array.length / 2 - index + (array.length / 2 - 1) :
+                            index,
                     move = position / (array.length / 2),
                     rotate = 1 - move;
 
@@ -122,10 +122,10 @@
     -----------------------------*/
 
         // Add scrollspy to <body>
-        $("body").scrollspy({ target: ".navbar", offset: 50 });
+        $("body").scrollspy({target: ".navbar", offset: 50});
 
         // Add smooth scrolling on all links inside the navbar
-        $("#myNavbar a").on("click", function(event) {
+        $("#myNavbar a").on("click", function (event) {
             // Make sure this.hash has a value before overriding default behavior
             if (this.hash !== "") {
                 // Prevent default anchor click behavior
@@ -140,7 +140,7 @@
                         scrollTop: $(hash).offset().top
                     },
                     800,
-                    function() {
+                    function () {
                         // Add hash (#) to URL when done scrolling (default click behavior)
                         window.location.hash = hash;
                     }
@@ -151,13 +151,13 @@
         /*-----------------------------
       Collapse - icon in Collapse
     -----------------------------*/
-        $(".collapse").on("show.bs.collapse", function() {
+        $(".collapse").on("show.bs.collapse", function () {
             $(this)
                 .siblings(".card-header")
                 .addClass("active");
         });
 
-        $(".collapse").on("hide.bs.collapse", function() {
+        $(".collapse").on("hide.bs.collapse", function () {
             $(this)
                 .siblings(".card-header")
                 .removeClass("active");
@@ -166,7 +166,7 @@
         /*-----------------------------
       Dropdown Select for Language
     -----------------------------*/
-        $("select[data-menu]").each(function() {
+        $("select[data-menu]").each(function () {
             let select = $(this),
                 options = select.find("option"),
                 menu = $("<div />").addClass("select-menu"),
@@ -174,7 +174,7 @@
                 list = $("<ul />"),
                 arrow = $("<em />").prependTo(button);
 
-            options.each(function(i) {
+            options.each(function (i) {
                 let option = $(this);
                 list.append($("<li />").text(option.text()));
             });
@@ -188,7 +188,7 @@
             list.clone().insertAfter(button);
         });
 
-        $(document).on("click", ".select-menu", function(e) {
+        $(document).on("click", ".select-menu", function (e) {
             let menu = $(this);
 
             if (!menu.hasClass("open")) {
@@ -196,7 +196,7 @@
             }
         });
 
-        $(document).on("click", ".select-menu > ul > li", function(e) {
+        $(document).on("click", ".select-menu > ul > li", function (e) {
             let li = $(this),
                 menu = li.parent().parent(),
                 select = menu.children("select"),
@@ -227,7 +227,7 @@
         /*-----------------------------
       Hide and Show Password
     -----------------------------*/
-        $("#show_hide_password").on("click", "a", function(event) {
+        $("#show_hide_password").on("click", "a", function (event) {
             event.preventDefault();
             if ($("#show_hide_password input").attr("type") == "text") {
                 $("#show_hide_password input").attr("type", "password");
@@ -254,7 +254,7 @@
       loading before open page
     -----------------------------*/
         // Fakes the loading setting a timeout
-        setTimeout(function() {
+        setTimeout(function () {
             $("body").addClass("loaded_page");
         }, 3000);
 
@@ -270,7 +270,7 @@
         progressPath.getBoundingClientRect();
         progressPath.style.transition = progressPath.style.WebkitTransition =
             "stroke-dashoffset 10ms linear";
-        var updateProgress = function() {
+        var updateProgress = function () {
             var scroll = $(window).scrollTop();
             var height = $(document).height() - $(window).height();
             var progress = pathLength - (scroll * pathLength) / height;
@@ -280,16 +280,16 @@
         $(window).on("scroll", updateProgress);
         var offset = 250;
         var duration = 550;
-        jQuery(window).on("scroll", function() {
+        jQuery(window).on("scroll", function () {
             if (jQuery(this).scrollTop() > offset) {
                 jQuery(".prgoress_indicator").addClass("active-progress");
             } else {
                 jQuery(".prgoress_indicator").removeClass("active-progress");
             }
         });
-        jQuery(".prgoress_indicator").on("click", function(event) {
+        jQuery(".prgoress_indicator").on("click", function (event) {
             event.preventDefault();
-            jQuery("html, body").animate({ scrollTop: 0 }, duration);
+            jQuery("html, body").animate({scrollTop: 0}, duration);
             return false;
         });
 
@@ -424,8 +424,8 @@
         /*-----------------------------
       progress-bar
     -----------------------------*/
-        var delay = 400;
-        $(".progress-bar").each(function(i) {
+        const delay = 400;
+        $(".progress-bar").each(function (i) {
             $(this)
                 .delay(delay * i)
                 .animate({
@@ -491,19 +491,19 @@
       Mousehover for dropdown
     -----------------------------*/
         $(".dropdown.dropdown-hover").hover(
-            function() {
+            function () {
                 $(this).addClass("show");
             },
-            function() {
+            function () {
                 $(this).removeClass("show");
             }
         );
 
         $(".dropdown-submenu.dropdown-hover").hover(
-            function() {
+            function () {
                 $(this).addClass("show");
             },
-            function() {
+            function () {
                 $(this).removeClass("show");
             }
         );
@@ -515,7 +515,7 @@
         var i;
 
         for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
+            coll[i].addEventListener("click", function () {
                 this.classList.toggle("active");
                 var content = this.nextElementSibling;
                 if (content.style.height) {
@@ -534,14 +534,14 @@
   -----------------------------*/
     // Gets the video src from the data-src on each button
     var $videoSrc;
-    $(".btn_video").on("click", function() {
+    $(".btn_video").on("click", function () {
         $videoSrc = $(this).data("src");
     });
 
     console.log($videoSrc);
 
     // when the modal is opened autoplay it
-    $("#mdllVideo").on("shown.bs.modal", function(e) {
+    $("#mdllVideo").on("shown.bs.modal", function (e) {
         // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
         $("#video").attr(
             "src",
@@ -550,7 +550,7 @@
     });
 
     // stop playing the youtube video when I close the modal
-    $("#mdllVideo").on("hide.bs.modal", function(e) {
+    $("#mdllVideo").on("hide.bs.modal", function (e) {
         // a poor man's stop video
         $("#video").attr("src", $videoSrc);
     });
@@ -605,7 +605,7 @@
     /*-----------------------------
     Checkbox Select
   -----------------------------*/
-    $(".checkbox-item .item-select").on("click", function() {
+    $(".checkbox-item .item-select").on("click", function () {
         $(this)
             .parent()
             .find(".item-select.active")
@@ -673,7 +673,7 @@
     /*-----------------------------
      tooltip
    -----------------------------*/
-    $(function() {
+    $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
@@ -684,79 +684,48 @@
 })(jQuery);
 
 
-
-var post_id = "";
-var has_next_page = false;
-var end_cursor = "";
-var count = 0;
-var comments = [];
-var post_img = "";
-var type = "";
+let post_id = "";
+let has_next_page = false;
+let end_cursor = "";
+let count = 0;
+let comments = [];
+let post_img = "";
+let type = "";
 
 function getComments() {
-    var v = $("#scanner-text").val();
-    var mc = $("#comment-count").val();
+    var instagramPostUrl = $("#scanner-text").val();
+    var commentsCount = $("#comment-count").val();
 
-    if (v != "") {
-        var res = v.split("/");
+    if (instagramPostUrl !== "") {
+        var res = instagramPostUrl.split("/");
         post_id = res[res.length - 2];
 
-        if (post_id != "") {
+        if (post_id !== "") {
             $("#progress-bar").show();
 
             $.ajax({
                 type: "GET",
-                url: "https://www.instagram.com/p/" + post_id + "/",
-                error: function(error) {
+                url: "/instagram/comments/p/" + post_id + "/",
+                error: function () {
                     $("#progress-bar").hide();
                     $("#error-text").html("please enter a validate url");
                 },
-                success: function(data) {
-                    setTimeout(function() {
-                        var d = data.split("window._sharedData = ");
-                        var da = d[1].split("script>");
-                        var dat = da[0].substring(0, da[0].length - 3);
-                        var data2 = JSON.parse(dat);
-
-                        comments =
-                            data2.entry_data.PostPage[0].graphql.shortcode_media
-                            .edge_media_to_parent_comment.edges;
-
-                        has_next_page =
-                            data2.entry_data.PostPage[0].graphql.shortcode_media
-                            .edge_media_to_parent_comment.page_info
-                            .has_next_page;
-
-                        end_cursor =
-                            data2.entry_data.PostPage[0].graphql.shortcode_media
-                            .edge_media_to_parent_comment.page_info
-                            .end_cursor;
-
-                        count =
-                            data2.entry_data.PostPage[0].graphql.shortcode_media
-                            .edge_media_to_parent_comment.count;
-
-                        post_img =
-                            data2.entry_data.PostPage[0].graphql.shortcode_media
-                            .display_resources[0].src;
+                success: function (data) {
+                    setTimeout(function () {
+                        comments = data.comments;
+                        has_next_page = data.has_next_page;
+                        end_cursor = data.end_cursor;
+                        count = data.count;
+                        post_img = data.post_img;
 
                         $("#count").html(count);
                         $("#post-img").attr("src", post_img);
-
-
-                        if (has_next_page && comments.length < mc) {
+                        if (has_next_page && comments.length < commentsCount){
                             loadMoreComment();
                         } else {
                             $("#progress-bar").hide();
                             $("#search-area").hide();
                             $("#comments-area").show();
-
-                            $(".navigator")
-                                .find(".item:nth-child(2)")
-                                .removeClass("active");
-                            $(".navigator")
-                                .find(".item:nth-child(3)")
-                                .addClass("active");
                         }
                     }, 3000);
                 }
@@ -769,7 +738,9 @@ function getComments() {
     }
 }
 
+
 function loadMoreComment() {
+
     $.ajax({
         type: "GET",
         url: 'https://www.instagram.com/graphql/query/?query_hash=bc3296d1ce80a24b1b6e40b1e72903f5&variables={"shortcode":"' +
@@ -777,33 +748,29 @@ function loadMoreComment() {
             '","first":50,"after":"' +
             end_cursor +
             '"}',
-        success: function(data) {
+        success: function (data) {
             var d = data;
-
+            console.log(d);
             try {
-                for (
-                    var i = 0; i <
-                    d.data.shortcode_media.edge_media_to_parent_comment.edges
-                    .length; i++
-                )
+                for (var i = 0; i < d.data.shortcode_media.edge_media_to_parent_comment.edges.length; i++)
                     comments.push(
                         d.data.shortcode_media.edge_media_to_parent_comment
-                        .edges[i]
+                            .edges[i]
                     );
 
                 has_next_page =
                     d.data.shortcode_media.edge_media_to_parent_comment
-                    .page_info.has_next_page;
+                        .page_info.has_next_page;
 
                 end_cursor =
                     d.data.shortcode_media.edge_media_to_parent_comment
-                    .page_info.end_cursor;
+                        .page_info.end_cursor;
             } catch (error) {
                 has_next_page = false;
                 end_cursor = "";
             }
 
-            if (has_next_page && comments.length < mc) {
+            if (has_next_page && comments.length < commentsCount) {
                 loadMoreComment();
             } else {
                 $("#progress-bar").hide();
@@ -820,45 +787,77 @@ function loadMoreComment() {
     });
 }
 
+
+$('#error-btn').on('click', function () {
+    console.log('try again')
+    $("#progress-bar").hide();
+    $("#comments-area").hide();
+    $("#winners-area").hide();
+    $("#error-area").hide();
+    $("#search-area").show();
+});
+
+
 function findWinners() {
     $("#progress-bar").show();
-    setTimeout(function() {
-            var winner = $("#winner").val();
-            var mention = $("#min-mention").val();
+    setTimeout(function () {
+            var winner = $("#winner").val(); // winners_count
+            var mention = $("#min-mention").val(); // mention_count
+            var timer = $("#timer"); // timer
+
 
             var new_arr = [];
             var arr_winner = [];
 
+            // loop over commets array
             for (var i = 0; i < comments.length; i++) {
+
+                // split comment into array
                 var c = comments[i].node.text.split(" ");
+
+
+                // x refered to number of mentions
                 var x = 0;
 
                 //check mentions
                 if (c.length >= Number(mention)) {
                     for (var i2 = 0; i2 < c.length; i2++) {
-                        if (c[i2].substring(0, 1) == "@" && c[i2].length >= 5) x++;
+                        if (c[i2].substring(0, 1) == "@" && c[i2].length >= 5) {
+                            // if is a mention
+                            x++;
+                        }
                     }
                 }
 
+                // if number of mention > or = x add this comment to new_arr
                 if (x >= Number(mention)) {
                     new_arr.push(comments[i]);
                 }
             }
 
             if (new_arr.length == 0) {
-                swal({
-                    icon: "error",
-                    title: "Sorry! Can not find any winner. Please try again"
-                }).then(() => {
-                    window.location.reload();
-                });
-            } else if (new_arr.length <= Number(winner)) {
+                // there no winner
+                $("#progress-bar").hide();
+                $("#winners-area").hide();
+                $("#comments-area").hide();
+                $("#error-area").show();
+            }
+
+            // check if new arr is bigger than number of winners
+            else if (new_arr.length <= Number(winner)) {
+
                 arr_winner = new_arr;
             } else {
                 for (var i = 0; i < Number(winner); i++) {
-                    //draw winners
+
+
+                    // get randome number start from 0 to new_array.lenght
                     var r = Math.floor(Math.random() * new_arr.length);
+
+                    //. winner id
                     var uid = new_arr[r].node.owner.id;
+
+                    // add winner to winners_array
                     arr_winner.push(new_arr[r]);
                     //new_arr.splice(r, 1);
 
@@ -883,22 +882,8 @@ function findWinners() {
             }
 
 
-            // winners => arr_winner
-            // scrapped comments => comments
-            ///// check if user can scrape
-            /*
-                        $.ajax({
-                            type: "POST",
-                            url: 'http://127.0.0.1:8000/api/canscrape',
-                            data: {
+            // push to serve
 
-                                'quantite': 66,
-                                'user_id': $('meta[name="user_id"]').attr('content')
-                            }
-
-                        });
-
-            */
             $.ajax({
                 type: "POST",
                 url: 'http://127.0.0.1:8000/api/instaUrl',
@@ -916,7 +901,6 @@ function findWinners() {
                 }
 
             });
-
 
 
             $("#progress-bar").hide();

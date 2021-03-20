@@ -31,7 +31,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('/', [PageController::class, 'index'])->name('home');
     Route::get('/about', [PageController::class, 'about'])->name('about');
     Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
-    Route::get('/instagram-comment-winner-picker',[PageController::class, 'instagram'] );
+    Route::get('/instagram-comment-winner-picker',[PageController::class, 'instagram']);
+    Route::get('/instagram/comments/p/{id}' , [PageController::class , 'instagramComments'])->name('instagram-comments');
+    Route::get('/instagram/comments/{url}' , [PageController::class , 'instagramMoreComments'])->name('more-comments');
 });
 
 
