@@ -712,6 +712,8 @@ function getComments() {
                 },
                 success: function (data) {
                     setTimeout(function () {
+
+                        
                         comments = data.comments;
                         has_next_page = data.has_next_page;
                         end_cursor = data.end_cursor;
@@ -721,6 +723,7 @@ function getComments() {
                         $("#count").html(count);
                         $("#post-img").attr("src", post_img);
                         if (has_next_page && comments.length < commentsCount){
+                            console.log('load more');
                             loadMoreComment();
                         } else {
                             $("#progress-bar").hide();
@@ -741,13 +744,12 @@ function getComments() {
 
 function loadMoreComment() {
 
+    var more_comments_url = 'https://www.instagram.com/graphql/query/?query_hash=bc3296d1ce80a24b1b6e40b1e72903f5&variables={"shortcode":"' +post_id +'","first":50,"after":"' +end_cursor +'"}';
+
+    console.log(more_comments_url);
     $.ajax({
         type: "GET",
-        url: 'https://www.instagram.com/graphql/query/?query_hash=bc3296d1ce80a24b1b6e40b1e72903f5&variables={"shortcode":"' +
-            post_id +
-            '","first":50,"after":"' +
-            end_cursor +
-            '"}',
+        url: more_comments_url,
         success: function (data) {
             var d = data;
             console.log(d);
