@@ -31,6 +31,15 @@
         height: 500px;
 
     }
+
+    #timer {
+        color: red;
+        display: flex;
+        align-items: center;
+        height: 500px;
+        font-weight: bold;
+        font-size: 85px;
+    }
 </style>
 
 
@@ -99,12 +108,33 @@
                                         <br>
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div class="col-8"><label style="font-size: 15px">{{ __('main.number_of_minimum_mention') }}</label>
+
+
+                                                <div class="col-8">
+                                                    <label style="font-size: 15px">{{ __('main.number_of_minimum_mention') }}</label>
                                                 </div>
-                                                <div class="col-4"><input type="number" style="text-align: center;width: 75px;padding-left: 8px;border-radius: 15px;color: #127fad;height: 30px;border: 1px solid #127fad;" id="min-mention" min="1" max="20" value="1"></div>
-                                                <div class="col-8"><label style="font-size: 15px">{{ __('main.number_of_winners') }}</label>
+                                                <div class="col-4">
+                                                    <input type="number" style="text-align: center;width: 75px;padding-left: 8px;border-radius: 15px;color: #127fad;height: 30px;border: 1px solid #127fad;" id="min-mention" min="0" value="0">
                                                 </div>
-                                                <div class="col-4"><input type="number" id="winner" min="0" max="20" value="0" style="text-align: center;width: 75px;padding-left: 8px;border-radius: 15px;color: #127fad;height: 30px;border: 1px solid #127fad;">
+
+                                                <br>
+                                                <br>
+                                                <div class="col-8">
+                                                    <label style="font-size: 15px">{{ __('main.number_of_winners') }}
+                                                    </label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="number" id="winner" min="1" value="1" style="text-align: center;width: 75px;padding-left: 8px;border-radius: 15px;color: #127fad;height: 30px;border: 1px solid #127fad;">
+                                                </div>
+
+                                                <br>
+                                                <br>
+                                                <div class="col-8">
+                                                    <label style="font-size: 15px">{{ __('main.timer') }}
+                                                    </label>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="number" id="timer-value" min="1" value="1" style="text-align: center;width: 75px;padding-left: 8px;border-radius: 15px;color: #127fad;height: 30px;border: 1px solid #127fad;">
                                                 </div>
                                             </div>
                                         </div>
@@ -113,17 +143,12 @@
                                 </div>
                             </div>
 
-                            <button onclick="findWinners()" type="button" style="width: 200px;" class="btn scale rounded-pill btn-video btn_video margin-t-6">
+                            <button onclick="startGiveAway()" type="button" style="width: 200px;" class="btn scale rounded-pill btn-video btn_video margin-t-6">
                                 {{ __('main.find_a_winner') }}
                             </button>
 
 
-                            <div id="container  " style="margin-top: 50px ;  max-height: 500px; overflow: scroll">
-                                <div class="row comments-table">
 
-
-                                </div>
-                            </div>
                         </div>
                         <div id="winners-area" class="container" style="display: none">
                             <h3> {{ __('main.winner') }}
@@ -139,6 +164,16 @@
                                 <div class="d-flex justify-content-center"> <button id="error-btn" class="btn  scale rounded-pill btn-video btn_video margin-t-4" style="width: 150px;"> try again </button>
                                 </div>
                             </div>
+                        </div>
+                        <div id="timer" style="display: none;">
+
+                            <div class="seconds video-btn">
+                                -
+                            </div>
+
+
+
+
                         </div>
                     </div>
 

@@ -122,7 +122,7 @@
     -----------------------------*/
 
         // Add scrollspy to <body>
-        $("body").scrollspy({target: ".navbar", offset: 50});
+        $("body").scrollspy({ target: ".navbar", offset: 50 });
 
         // Add smooth scrolling on all links inside the navbar
         $("#myNavbar a").on("click", function (event) {
@@ -137,8 +137,8 @@
                 // Using jQuery's animate() method to add smooth page scroll
                 // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
                 $("html, body").animate({
-                        scrollTop: $(hash).offset().top
-                    },
+                    scrollTop: $(hash).offset().top
+                },
                     800,
                     function () {
                         // Add hash (#) to URL when done scrolling (default click behavior)
@@ -289,7 +289,7 @@
         });
         jQuery(".prgoress_indicator").on("click", function (event) {
             event.preventDefault();
-            jQuery("html, body").animate({scrollTop: 0}, duration);
+            jQuery("html, body").animate({ scrollTop: 0 }, duration);
             return false;
         });
 
@@ -429,8 +429,8 @@
             $(this)
                 .delay(delay * i)
                 .animate({
-                        width: $(this).attr("aria-valuenow") + "%"
-                    },
+                    width: $(this).attr("aria-valuenow") + "%"
+                },
                     delay
                 );
         });
@@ -617,6 +617,8 @@
       feature_strories
     -----------------------------*/
 
+
+
     var swiper = new Swiper(".blog-slider", {
         slidesPerView: 3,
         spaceBetween: 30,
@@ -680,8 +682,15 @@
     /*-----------------------------
    fixSide_scroll
  -----------------------------*/
+
+
+
+
     var sticky = new Sticky(".fixSide_scroll");
 })(jQuery);
+
+
+
 
 
 let post_id = "";
@@ -691,6 +700,7 @@ let count = 0;
 let comments = [];
 let post_img = "";
 let type = "";
+let timer_duration = 0;
 
 function getComments() {
     var instagramPostUrl = $("#scanner-text").val();
@@ -705,7 +715,7 @@ function getComments() {
 
             $.ajax({
                 type: "GET",
-                url: "/instagram/comments/p/" + post_id + "/",
+                url: "api/instagram/comments/p/" + post_id + "/",
                 error: function () {
                     $("#progress-bar").hide();
                     $("#error-text").html("please enter a validate url");
@@ -713,7 +723,7 @@ function getComments() {
                 success: function (data) {
                     setTimeout(function () {
 
-                        
+
                         comments = data.comments;
                         has_next_page = data.has_next_page;
                         end_cursor = data.end_cursor;
@@ -722,7 +732,7 @@ function getComments() {
 
                         $("#count").html(count);
                         $("#post-img").attr("src", post_img);
-                        if (has_next_page && comments.length < commentsCount){
+                        if (has_next_page && comments.length < commentsCount) {
                             console.log('load more');
                             loadMoreComment();
                         } else {
@@ -741,15 +751,65 @@ function getComments() {
     }
 }
 
+var interval;
+function startGiveAway() {
+
+
+    $("#progress-bar").hide();
+    $("#search-area").hide();
+    $("#comments-area").hide();
+    $("#timer").show();
+
+
+     
+
+    console.log($('#timer-value').val());
+    var duration = $('#timer-value').val(),
+
+
+    
+
+    display = document.querySelector('.seconds');
+
+    var timer = duration, minutes, seconds;
+
+    display.textContent = "00" + ":" + 00;
+
+    interval = setInterval(function () {
+
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+
+            findWinners();
+            clearInterval();
+
+        }
+    }, 1000);
+}
+
 
 function loadMoreComment() {
 
-    var more_comments_url = 'https://www.instagram.com/graphql/query/?query_hash=bc3296d1ce80a24b1b6e40b1e72903f5&variables={"shortcode":"' +post_id +'","first":50,"after":"' +end_cursor +'"}';
+    var more_comments_url = 'api/instagram/comments/more/' + post_id + '?end_cursor=' + end_cursor;
 
-    console.log(more_comments_url);
     $.ajax({
         type: "GET",
         url: more_comments_url,
+        error: function (error) {
+            console.log(error);
+
+            $("#progress-bar").hide();
+            $("#search-area").hide();
+            $("#error-area").show();
+        },
         success: function (data) {
             var d = data;
             console.log(d);
@@ -801,125 +861,121 @@ $('#error-btn').on('click', function () {
 
 
 function findWinners() {
+    clearInterval(interval);
     $("#progress-bar").show();
-    setTimeout(function () {
-            var winner = $("#winner").val(); // winners_count
-            var mention = $("#min-mention").val(); // mention_count
-            var timer = $("#timer"); // timer
+    $("#timer").hide();
+    $("#winners-idea").hide();
+    var winner = $("#winner").val(); // winners_count
+    var mention = $("#min-mention").val(); // mention_count
+   
 
 
-            var new_arr = [];
-            var arr_winner = [];
+    var new_arr = [];
+    var arr_winner = [];
 
-            // loop over commets array
-            for (var i = 0; i < comments.length; i++) {
+    // loop over commets array
+    for (var i = 0; i < comments.length; i++) {
 
-                // split comment into array
-                var c = comments[i].node.text.split(" ");
+        // split comment into array
+        var c = comments[i].node.text.split(" ");
 
 
-                // x refered to number of mentions
-                var x = 0;
+        // x refered to number of mentions
+        var x = 0;
 
-                //check mentions
-                if (c.length >= Number(mention)) {
-                    for (var i2 = 0; i2 < c.length; i2++) {
-                        if (c[i2].substring(0, 1) == "@" && c[i2].length >= 5) {
-                            // if is a mention
-                            x++;
-                        }
-                    }
-                }
-
-                // if number of mention > or = x add this comment to new_arr
-                if (x >= Number(mention)) {
-                    new_arr.push(comments[i]);
+        //check mentions
+        if (c.length >= Number(mention)) {
+            for (var i2 = 0; i2 < c.length; i2++) {
+                if (c[i2].substring(0, 1) == "@" && c[i2].length >= 5) {
+                    // if is a mention
+                    x++;
                 }
             }
-
-            if (new_arr.length == 0) {
-                // there no winner
-                $("#progress-bar").hide();
-                $("#winners-area").hide();
-                $("#comments-area").hide();
-                $("#error-area").show();
-            }
-
-            // check if new arr is bigger than number of winners
-            else if (new_arr.length <= Number(winner)) {
-
-                arr_winner = new_arr;
-            } else {
-                for (var i = 0; i < Number(winner); i++) {
-
-
-                    // get randome number start from 0 to new_array.lenght
-                    var r = Math.floor(Math.random() * new_arr.length);
-
-                    //. winner id
-                    var uid = new_arr[r].node.owner.id;
-
-                    // add winner to winners_array
-                    arr_winner.push(new_arr[r]);
-                    //new_arr.splice(r, 1);
-
-                    //remove same users
-                    var l = new_arr.length;
-
-                    for (i2 = 0; i2 < l; i2++) {
-                        var index = new_arr.findIndex(n => n.node.owner.id == uid);
-                        if (index > -1) new_arr.splice(index, 1);
-                    }
-                }
-            }
-
-            //print winners
-            for (var i = 0; i < arr_winner.length; i++) {
-                var u = arr_winner[i].node;
-
-
-                $("#winners").append(
-                    '<div class="col-12 col-md-6 " style="padding: 15px"><a target="_blank"  href="https://www.instagram.com/' + u.owner.username + '/"> <div class="winner card "> <br> <br> <div id="img-container"> <img style="height: 100px;width: 100px; border-radius: 50%; border: 2px solid red" src="' + u.owner.profile_pic_url + '" alt="" class="winner-img"> </div> <br> <br> <div><span id="winner-name">' + u.owner.username + '</span></div> <br> <br> <div><p id="winner-comment" style="padding: 10px">' + u.text + '</p></div> </div></a> </div>'
-                );
-            }
-
-
-            // push to serve
-
-            $.ajax({
-                type: "POST",
-                url: 'http://127.0.0.1:8000/api/instaUrl',
-                data: {
-                    'winners': arr_winner,
-                    'scrapped_comments': comments,
-                    'post_id': post_id,
-                    'mentions': mention,
-                    'comment_count': count,
-                    'like_count': null,
-                    'quantite': 66,
-                    'timer': null,
-                    'keyword': null,
-                    'user_id': $('meta[name="user_id"]').attr('content')
-                }
-
-            });
-
-
-            $("#progress-bar").hide();
-            $("#comments-area").hide();
-            $("#winners-area").show();
-
-
-            var data = {
-                post: $("#scanner-text").val(),
-                comments: comments.length,
-                winners: arr_winner.length
-            };
-
-
         }
 
-        ,
-        3000
-    );
+        // if number of mention > or = x add this comment to new_arr
+        if (x >= Number(mention)) {
+            new_arr.push(comments[i]);
+        }
+    }
+
+    if (new_arr.length == 0) {
+        // there no winner
+        $("#progress-bar").hide();
+        $("#winners-area").hide();
+        $("#comments-area").hide();
+        $("#error-area").show();
+    }
+
+    // check if new arr is bigger than number of winners
+    else if (new_arr.length <= Number(winner)) {
+
+        arr_winner = new_arr;
+    } else {
+        for (var i = 0; i < Number(winner); i++) {
+
+
+            // get randome number start from 0 to new_array.lenght
+            var r = Math.floor(Math.random() * new_arr.length);
+
+            //. winner id
+            var uid = new_arr[r].node.owner.id;
+
+            // add winner to winners_array
+            arr_winner.push(new_arr[r]);
+            //new_arr.splice(r, 1);
+
+            //remove same users
+            var l = new_arr.length;
+
+            for (i2 = 0; i2 < l; i2++) {
+                var index = new_arr.findIndex(n => n.node.owner.id == uid);
+                if (index > -1) new_arr.splice(index, 1);
+            }
+        }
+    }
+
+    //print winners
+    for (var i = 0; i < arr_winner.length; i++) {
+        var u = arr_winner[i].node;
+
+
+        $("#winners").append(
+            '<div class="col-12 col-md-6 " style="padding: 15px"><a target="_blank"  href="https://www.instagram.com/' + u.owner.username + '/"> <div class="winner card "> <br> <br> <div id="img-container"> <img style="height: 100px;width: 100px; border-radius: 50%; border: 2px solid red" src="' + u.owner.profile_pic_url + '" alt="" class="winner-img"> </div> <br> <br> <div><span id="winner-name">' + u.owner.username + '</span></div> <br> <br> <div><p id="winner-comment" style="padding: 10px">' + u.text + '</p></div> </div></a> </div>'
+        );
+    }
+
+
+    // push to serve
+
+    // $.ajax({
+    //     type: "POST",
+    //     url: 'http://127.0.0.1:8000/api/instaUrl',
+    //     data: {
+    //         'winners': arr_winner,
+    //         'scrapped_comments': comments,
+    //         'post_id': post_id,
+    //         'mentions': mention,
+    //         'comment_count': count,
+    //         'like_count': null,
+    //         'quantite': 66,
+    //         'timer': null,
+    //         'keyword': null,
+    //         'user_id': $('meta[name="user_id"]').attr('content')
+    //     }
+
+    // });
+
+
+    $("#progress-bar").hide();
+    $("#comments-area").hide();
+    $("#winners-area").show();
+
+
+    var data = {
+        post: $("#scanner-text").val(),
+        comments: comments.length,
+        winners: arr_winner.length
+    };
+
 }

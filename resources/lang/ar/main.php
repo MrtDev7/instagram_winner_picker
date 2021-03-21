@@ -73,6 +73,7 @@ return [
     'price_per_month'=>'سعر لكل شهر',
     'price_per_package'=>'سعر الحزمة',
     'select_plan' => 'إختيار',
-    'point' => 'نقطة'
+    'point' => 'نقطة',
+    'time'=> 'وقت'
 
 ];

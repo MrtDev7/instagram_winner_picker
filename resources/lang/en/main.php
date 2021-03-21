@@ -71,7 +71,8 @@ return [
     'price_per_month' => 'price per month',
     'price_per_package' => 'price per package',
     'select_plan' => 'select plan',
-    'point' => 'point'
+    'point' => 'point',
+    'timer' => 'Time'
 
 
     /*
